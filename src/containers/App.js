@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import './App.css';
-import Person from './Person/Person';
+import Persons from '../components/Persons/persons';
+import Cockpit from '../components/Cockpit/Cockpit';
 // import Radium from 'radium';
 
 class App extends Component {
@@ -61,63 +62,25 @@ class App extends Component {
   }
 
   render() {
-    const style = {
-      backgroundColor: 'green',
-      color: 'white',
-      padding: '16px',
-      border: '1px solid #eee',
-      // ':hover': {
-      //   backgroundColor: 'lightgreen',
-      //   color: 'black'
-      // }
-    }
     let persons = null;
     if (this.state.showPersons) {
       persons = (
         <div>
-          {
-            this.state.persons.map((person, index) => {
-              return <Person
-                name={person.name}
-                age={person.age}
-                click={() => this.deletePersonHandler(index)}
-                key={person.id}
-                changed={(event) => this.OnNameChangeHandler(event, person.id)}
-              />
-            })
-          }
-          {/* <Person
-            name={this.state.persons[0].name}
-            age={this.state.persons[0].age} />
-          <Person
-            name={this.state.persons[1].name}
-            age={this.state.persons[1].age}
-            click={this.ChangeNameHandler.bind(this, 'Rahul!!!!')}
-            changed={this.OnNameChangeHandler} >My Hobbies : Racing</Person>
-          <Person
-            name={this.state.persons[2].name}
-            age={this.state.persons[2].age} /> */}
+          <Persons
+            persons={this.state.persons}
+            clicked={this.deletePersonHandler}
+            changed={this.OnNameChangeHandler}
+          />
         </div>
       )
-      style.backgroundColor = 'red';
-      // style[':hover'] = {
-      //   backgroundColor: 'purple',
-      //   color: 'black'
-      // }
-    }
-    const clasess = [];
-    if (this.state.persons.length <= 2) {
-      clasess.push('red');
-    }
-    if (this.state.persons.length <= 1) {
-      clasess.push('bold');
     }
     return (
       <div className="App" >
-        <h1>Hi, I'm a React App</h1>
-        <p className={clasess.join(" ")}>This is really working!!</p>
-        {/* <button onClick={() => this.ChangeNameHandler("Rahul321")}>Switch Name</button> */}
-        <button style={style} onClick={this.ToggleHandler}>Switch Name</button>
+        <Cockpit
+          persons={this.state.persons}
+          showPersons={this.state.showPersons}
+          clicked={this.ToggleHandler}
+        />
         {persons}
       </div>
     );
