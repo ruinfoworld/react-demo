@@ -5,6 +5,16 @@ import Cockpit from '../components/Cockpit/Cockpit';
 // import Radium from 'radium';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    console.log('App.js inside constructor', props);
+  }
+  componentWillMount() {
+    console.log('App.js inside componentWillUnmount()');
+  }
+  componentDidMount() {
+    console.log('App.js inside componentDidMount()');
+  }
   state = {
     persons: [
       { id: 'sada', name: "Rahul", age: 31 },
@@ -62,6 +72,7 @@ class App extends Component {
   }
 
   render() {
+    console.log('App.js inside render()');
     let persons = null;
     if (this.state.showPersons) {
       persons = (
