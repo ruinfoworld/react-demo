@@ -2,6 +2,8 @@ import { Component } from 'react';
 import './App.css';
 import Persons from '../components/Persons/persons';
 import Cockpit from '../components/Cockpit/Cockpit';
+import Global from '../hoc/global';
+import withClass from '../hoc/WithClass';
 // import Radium from 'radium';
 
 class App extends Component {
@@ -17,11 +19,12 @@ class App extends Component {
   }
   state = {
     persons: [
-      { id: 'sada', name: "Rahul", age: 31 },
+      { id: 'sada', name: "Rahul", age: "31" },
       { id: 'fdsfd', name: "Urvi", age: 30 },
       { id: 'fghgfh', name: "Dhviti", age: 4 },
     ],
     showPersons: false,
+    toggleClicked: 0
   }
 
   ChangeNameHandler = (NewName) => {
@@ -68,7 +71,23 @@ class App extends Component {
 
   ToggleHandler = () => {
     const doesShow = this.state.showPersons;
-    this.setState({ showPersons: !doesShow })
+    this.setState((prevState, props) => {
+      return {
+        showPersons: !doesShow,
+        toggleClicked: prevState.toggleClicked + 1
+      }
+    })
+  }
+
+  shouldComponentUpdate(nextprops, nextstates) {
+    console.log('Update App.js inside UNSAFE_componentWillReceiveProps()', nextprops, nextstates);
+    return true;
+  }
+  UNSAFE_componentWillUpdate(nextprops, nextstates) {
+    console.log('Update App.js inside UNSAFE_componentWillUpdate()', nextprops, nextstates);
+  }
+  componentDidUpdate() {
+    console.log('Update App.js inside componentDidUpdate()');
   }
 
   render() {
@@ -86,14 +105,14 @@ class App extends Component {
       )
     }
     return (
-      <div className="App" >
+      <Global>
         <Cockpit
           persons={this.state.persons}
           showPersons={this.state.showPersons}
           clicked={this.ToggleHandler}
         />
         {persons}
-      </div>
+      </Global>
     );
   }
 
@@ -101,4 +120,4 @@ class App extends Component {
 }
 
 // export default Radium(App);
-export default App;
+export default withClass(App, "App");

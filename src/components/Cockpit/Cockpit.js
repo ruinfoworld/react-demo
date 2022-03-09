@@ -1,5 +1,5 @@
 import React from "react";
-
+import Global from "../../hoc/global";
 const Cockpit = (props) => {
     const style = {
         backgroundColor: 'green',
@@ -18,12 +18,12 @@ const Cockpit = (props) => {
         clasess.push('bold');
     }
     return (
-        <div>
+        <Global>
             <h1>Hi, I'm a React App</h1>
             <p className={clasess.join(" ")}>This is really working!!</p>
             {/* <button onClick={() => this.ChangeNameHandler("Rahul321")}>Switch Name</button> */}
             <button style={style} onClick={props.clicked}>Switch Name</button>
-        </div>
+        </Global>
     )
 }
 
