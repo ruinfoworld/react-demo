@@ -23,8 +23,9 @@ const Cockpit = (props) => {
             <p className={clasess.join(" ")}>This is really working!!</p>
             {/* <button onClick={() => this.ChangeNameHandler("Rahul321")}>Switch Name</button> */}
             <button style={style} onClick={props.clicked}>Switch Name</button>
+            <button onClick={props.login}>Log In</button>
         </Global>
     )
 }
 
-export default Cockpit;
+export default React.memo(Cockpit);

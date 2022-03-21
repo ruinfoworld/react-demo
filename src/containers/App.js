@@ -1,10 +1,12 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import './App.css';
 import Persons from '../components/Persons/persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 import Global from '../hoc/global';
 import withClass from '../hoc/WithClass';
 // import Radium from 'radium';
+
+export const AuthExport = React.createContext(false);
 
 class App extends Component {
   constructor(props) {
@@ -24,7 +26,8 @@ class App extends Component {
       { id: 'fghgfh', name: "Dhviti", age: 4 },
     ],
     showPersons: false,
-    toggleClicked: 0
+    toggleClicked: 0,
+    isAuthenticated: false
   }
 
   ChangeNameHandler = (NewName) => {
@@ -90,6 +93,10 @@ class App extends Component {
     console.log('Update App.js inside componentDidUpdate()');
   }
 
+  LoginHandler = () => {
+    this.setState({ isAuthenticated: !this.state.isAuthenticated })
+  }
+
   render() {
     console.log('App.js inside render()');
     let persons = null;
@@ -100,6 +107,7 @@ class App extends Component {
             persons={this.state.persons}
             clicked={this.deletePersonHandler}
             changed={this.OnNameChangeHandler}
+            isauthenticated={this.state.isAuthenticated}
           />
         </div>
       )
@@ -110,8 +118,9 @@ class App extends Component {
           persons={this.state.persons}
           showPersons={this.state.showPersons}
           clicked={this.ToggleHandler}
+          login={this.LoginHandler}
         />
-        {persons}
+        <AuthExport.Provider value={this.state.isAuthenticated}>{persons}</AuthExport.Provider>
       </Global>
     );
   }
